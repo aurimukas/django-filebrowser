@@ -312,7 +312,9 @@ class FileBrowserSite(object):
         for fileobject in listing:
             # date/type filter
             append = False
-            if (not filter_type or fileobject.filetype == filter_type) and (not filter_date or get_filterdate(filter_date, fileobject.date or 0)):
+            if (not filter_type or fileobject.filetype == filter_type
+                or (filter_type in SELECT_FORMATS and fileobject.filetype in SELECT_FORMATS[filter_type])) \
+                    and (not filter_date or get_filterdate(filter_date, fileobject.date or 0)):
                 append = True
             # search
             if do_search and not re_q.search(fileobject.filename.lower()):

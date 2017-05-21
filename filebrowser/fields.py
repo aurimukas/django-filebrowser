@@ -50,7 +50,7 @@ class FileBrowseWidget(Input):
             try:
                 final_attrs['directory'] = os.path.split(value.original.path_relative_directory)[0]
             except:
-                pass
+                final_attrs['directory'] = self.directory
         return render_to_string("filebrowser/custom_field.html", locals())
 
 
@@ -145,7 +145,7 @@ class FileBrowseUploadWidget(Input):
         self.extensions = attrs.get('extensions', '')
         self.format = attrs.get('format', '')
         self.upload_to = attrs.get('upload_to', '')
-        self.temp_upload_dir = attrs.get('temp_upload_dir', '')
+        self.temp_upload_dir = attrs.get('temp_upload_dir', UPLOAD_TEMPDIR)
         if attrs is not None:
             self.attrs = attrs.copy()
         else:
@@ -165,13 +165,13 @@ class FileBrowseUploadWidget(Input):
         final_attrs['extensions'] = self.extensions
         final_attrs['format'] = self.format
         final_attrs['upload_to'] = self.upload_to
-        final_attrs['temp_upload_dir'] = UPLOAD_TEMPDIR
+        final_attrs['temp_upload_dir'] = self.temp_upload_dir
         final_attrs['ADMIN_THUMBNAIL'] = ADMIN_THUMBNAIL
         if value != "":
             try:
                 final_attrs['directory'] = os.path.split(value.original.path_relative_directory)[0]
             except:
-                pass
+                final_attrs['directory'] = self.directory
         return render_to_string("filebrowser/custom_upload_field.html", locals())
 
 
